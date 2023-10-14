@@ -5,7 +5,8 @@
 #pragma once
 
 #include"ReaderFuncs.h"
-
+#include<vector>
+using namespace std;
 // Диалоговое окно MyDlg
 class MyDlg : public CDialogEx
 {
@@ -25,8 +26,10 @@ public:
 // Реализация
 protected:
 	HICON m_hIcon;
-	HANDLE hDevice;
+	//HANDLE hDevice;
 	HDEVINFO hDevInfo;
+	vector<HANDLE> handls;
+	vector<wchar_t*> names;
 	// Созданные функции схемы сообщений
 	virtual BOOL OnInitDialog();
 	afx_msg void OnPaint();
@@ -34,4 +37,5 @@ protected:
 	DECLARE_MESSAGE_MAP()
 public:
 	afx_msg void OnTimer(UINT_PTR nIDEvent);
+	CComboBox devList;
 };

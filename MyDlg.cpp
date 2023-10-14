@@ -26,6 +26,7 @@ MyDlg::MyDlg(CWnd* pParent /*=nullptr*/)
 void MyDlg::DoDataExchange(CDataExchange* pDX)
 {
 	CDialogEx::DoDataExchange(pDX);
+	DDX_Control(pDX, IDC_COMBO1, devList);
 }
 
 BEGIN_MESSAGE_MAP(MyDlg, CDialogEx)
@@ -47,7 +48,10 @@ BOOL MyDlg::OnInitDialog()
 	SetIcon(m_hIcon, FALSE);		// Мелкий значок
 
 	// TODO: добавьте дополнительную инициализацию
-	hDevice = GetDeviceHandle(hDevInfo);
+	GetDeviceHandle(&handls, &names);
+	for (int i = 0; i < names.size(); i++) {
+		devList.AddString(names[i]);
+	}
 	SetTimer(1, 1, NULL);
 	return TRUE;  // возврат значения TRUE, если фокус не передан элементу управления
 }
