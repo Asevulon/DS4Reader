@@ -52,6 +52,43 @@ BOOL MyDlg::OnInitDialog()
 	for (int i = 0; i < names.size(); i++) {
 		devList.AddString(names[i]);
 	}
+
+	//ПРОБУЕМ ВЫТАЩИТЬ ХОТЬ ЧТО ТО
+
+
+	
+
+	//Получаем данные дескриптора отчета о коллекции верхнего уровня
+	PHIDP_PREPARSED_DATA preparsData;
+	if (!HidD_GetPreparsedData(handls[0], &preparsData))
+		MessageBoxA(NULL, "ОШИБКА", "нагнулись данные дескриптора отчета", NULL);
+	
+	
+
+	//получаем отчет о возможностях коллекции верхнего уровня
+	HIDP_CAPS caps;
+	if(!HidP_GetCaps(preparsData, &caps))
+		MessageBoxA(NULL, "ОШИБКА", "нагнулся отчет о коллекции верхнего уровня", NULL);
+
+
+	//PHIDP_DATA allOutData;
+	//это говно принимает индекс и возвращает в себе инфу по кнопке
+	HIDP_DATA outdata;
+	outdata.DataIndex = 1;
+	ULONG dataLength = 1;
+	
+
+	//получение репорта
+	ULONG repLenght = caps.InputReportByteLength;
+	CHAR* reportb = (CHAR *)malloc(repLenght);
+
+	reportb[0] = 0;
+
+	if(!HidD_GetInputReport(handls[0], (void *)reportb,	repLenght))
+		MessageBoxA(NULL, "ОШИБКА", "нагнулся входной репорт", NULL);
+
+	HidP_GetData(HidP_Input, &outdata, &dataLength, preparsData, reportb, repLenght);
+
 	SetTimer(1, 1, NULL);
 	return TRUE;  // возврат значения TRUE, если фокус не передан элементу управления
 }
