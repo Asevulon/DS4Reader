@@ -21,7 +21,7 @@ int GetDeviceHandle(vector<HANDLE>* res, vector<wchar_t*>* names)
 	HidD_GetHidGuid(&hidGUID);
 
 	//Get a list of devices matching the criteria (hid interface, present)
-	hardwareDeviceInfoSet = SetupDiGetClassDevs(&hidGUID,
+	hardwareDeviceInfoSet = SetupDiGetClassDevsW(&hidGUID,
 		NULL, // Define no enumerator (global)
 		NULL, // Define no
 		(DIGCF_PRESENT | // Only Devices present
